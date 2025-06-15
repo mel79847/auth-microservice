@@ -32,10 +32,6 @@ public class Routes {
                     userController.registerUser(user);
                     return ServerResponse.ok().body(new Response("201", "OK"));
                 })
-                .POST("/redis-test", request -> {
-                Map<String, String> payload = request.body(Map.class);
-                return ServerResponse.ok().body(redisController.saveKeyValue(payload));
-                })
                 .build();
     }
 }

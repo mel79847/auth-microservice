@@ -1,22 +1,20 @@
 package upb.edu.AuthMicroservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-
-import java.util.concurrent.TimeUnit;
+import upb.edu.AuthMicroservice.repositories.RedisRepository;
 
 @Service
 public class RedisService {
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisRepository redisRepository;
 
     public void set(String key, String value) {
-        redisTemplate.opsForValue().set(key, value, 5, TimeUnit.MINUTES);
+        redisRepository.save(key, value, 5); // TTL de 5 minutos
     }
 
     public String get(String key) {
-        return redisTemplate.opsForValue().get(key);
+        return redisRepository.get(key);
     }
 }
