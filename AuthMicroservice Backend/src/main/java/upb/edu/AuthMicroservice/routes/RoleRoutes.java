@@ -4,21 +4,22 @@ import static org.springframework.web.servlet.function.RouterFunctions.route;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
 
-@Configuration
-public class Routes {
+import upb.edu.AuthMicroservice.controllers.RoleController;
+
+@Component
+public class RoleRoutes {
 
     @Autowired
-    private RoleRoutes roleRoutes;
+    private RoleController roleController;
 
     @Bean
-    public RouterFunction<ServerResponse> routerFunction() {
+    public RouterFunction<ServerResponse> roleRouter() {
         return route()
-                .path("api/roles", roleRoutes::roleRouter)
+                .POST("/", roleController::createRole)
                 .build();
     }
-
 }
