@@ -1,5 +1,7 @@
 package upb.edu.AuthMicroservice.routes;
 
+import static org.springframework.web.servlet.function.RouterFunctions.route;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +12,6 @@ import upb.edu.AuthMicroservice.controllers.UserController;
 import upb.edu.AuthMicroservice.models.Response;
 import upb.edu.AuthMicroservice.models.User;
 import upb.edu.AuthMicroservice.controllers.RedisController;
-
 
 import static org.springframework.web.servlet.function.RouterFunctions.route;
 import java.util.Map;
@@ -23,15 +24,14 @@ public class Routes {
     @Autowired
     private RedisController redisController;
 
+    private RoleRoutes roleRoutes;
+
 
     @Bean
-    public RouterFunction<ServerResponse> userRoutes() {
+    public RouterFunction<ServerResponse> routerFunction() {
         return route()
-                .POST("/register-user", request -> {
-                    User user = request.body(User.class);
-                    userController.registerUser(user);
-                    return ServerResponse.ok().body(new Response("201", "OK"));
-                })
+                .path("api/roles", roleRoutes::roleRouter)
                 .build();
     }
+
 }
