@@ -12,7 +12,6 @@ import upb.edu.AuthMicroservice.controllers.UserController;
 import upb.edu.AuthMicroservice.models.Response;
 import upb.edu.AuthMicroservice.models.User;
 import upb.edu.AuthMicroservice.controllers.RedisController;
-
 import java.util.Map;
 
 @Configuration
@@ -20,6 +19,14 @@ public class Routes {
 
     @Autowired
     private RoleRoutes roleRoutes;
+    @Autowired
+    private RedisRoutes redisRoutes;
+    private UserController userController;
+    @Autowired
+    private RedisController redisController;
+
+    private RoleRoutes roleRoutes;
+
    
     @Autowired
     private RedisRoutes redisRoutes;
