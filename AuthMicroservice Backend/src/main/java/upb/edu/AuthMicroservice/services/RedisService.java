@@ -11,7 +11,7 @@ public class RedisService {
     private RedisRepository redisRepository;
 
     public void set(String key, String value) {
-        redisRepository.save(key, value, 5); // TTL de 5 minutos
+        redisRepository.save(key, value, 5); 
     }
 
     public String get(String key) {
