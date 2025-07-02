@@ -25,12 +25,6 @@ public class Routes {
     @Autowired
     private RedisController redisController;
 
-    private RoleRoutes roleRoutes;
-
-   
-    @Autowired
-    private RedisRoutes redisRoutes;
-
     @Bean
     public RouterFunction<ServerResponse> routerFunction() {
         return route()
