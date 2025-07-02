@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Component
-public class GenerateSessionInteractor {
+public class SessionInteractor {
 
     @Autowired
     private SessionRepository sessionRepository;

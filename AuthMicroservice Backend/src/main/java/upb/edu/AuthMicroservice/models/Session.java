@@ -14,8 +14,13 @@ public class Session {
     @Column(name = "user_id")
     private int userId;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "expires_at")
     private LocalDateTime expiresAt;
+
+    @Column(name = "is_valid")
     private boolean isValid;
 
     public Session() {}
