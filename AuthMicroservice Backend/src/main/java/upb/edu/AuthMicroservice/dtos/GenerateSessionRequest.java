@@ -1,4 +1,4 @@
-package upb.edu.AuthMicroservice.models;
+package upb.edu.AuthMicroservice.dtos;
 
 public class GenerateSessionRequest {
     private int user_id;
