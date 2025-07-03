@@ -25,8 +25,6 @@ public class Session {
 
     public Session() {}
 
-    // Getters y Setters
-
     public UUID getId() {
         return id;
     }

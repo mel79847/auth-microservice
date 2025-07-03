@@ -41,7 +41,6 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> sessionRoutes() {
         return route()
-                // Aquí movemos la ruta /generate-session
                 .POST("/generate-session", sessionController::generateSession)
                 .build();
     }
