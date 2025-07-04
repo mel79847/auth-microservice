@@ -16,14 +16,8 @@ function App() {
         {/* <Login mode={mode} /> */}
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/forgot-password"
-              element={<ForgotPasswordPage />}
-            />
-            <Route
-              path="/reset-password"
-              element={<ResetPasswordPage />}
-            />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
           </Routes>
         </BrowserRouter>
       </div>
@@ -32,4 +26,3 @@ function App() {
 }
 
 export default App;
-
