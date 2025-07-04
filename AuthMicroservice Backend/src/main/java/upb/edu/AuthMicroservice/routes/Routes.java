@@ -29,13 +29,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> userRoutes() {
         return route()
-                .POST("/register-user", request -> {
-                    User user = request.body(User.class);
-                    userController.registerUser(user);
-                    return ServerResponse
-                            .ok()
-                            .body(new Response("201", "OK"));
-                })
+                .POST("/register-user", userController::registerUser)
                 .build();
     }
 
