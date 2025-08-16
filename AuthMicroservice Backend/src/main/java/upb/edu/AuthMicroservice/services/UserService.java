@@ -5,12 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import upb.edu.AuthMicroservice.interactors.SessionInteractor;
-import upb.edu.AuthMicroservice.interactors.UserInteractor;
-import upb.edu.AuthMicroservice.models.Session;
-import upb.edu.AuthMicroservice.models.User;
-import upb.edu.AuthMicroservice.repositories.SessionRepository;
 
-import upb.edu.AuthMicroservice.interactors.SessionInteractor;
+
 import upb.edu.AuthMicroservice.interactors.UserInteractor;
 import upb.edu.AuthMicroservice.models.User;
 
@@ -19,10 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+
 
 @Service
 public class UserService {
