@@ -27,10 +27,10 @@ public class Routes {
 
     @Bean
     public RouterFunction<ServerResponse> routerFunction(RoleController roleController) {
-        return RouterFunctions.route()
+        return route()
                 .path("/api", builder -> builder.add(RoleRoutes.roleRoutes(roleController)))
                 .build();
-
+    }
     @Bean
     public RouterFunction<ServerResponse> userRoutes(UserController controller) {
         return route()
