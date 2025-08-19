@@ -33,4 +33,7 @@ public class PermissionService {
         return false;
     }
 
+    public List<Permission> getAllPermissions() {
+        return permissionRepository.findAll();
+    }
 }
