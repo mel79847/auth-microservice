@@ -17,7 +17,7 @@ import upb.edu.AuthMicroservice.controllers.RoleController;
 public class RoleRoutes {
 
     @Bean
-    public RouterFunction<ServerResponse> roleRouter(RoleController roleController) {
+    public static RouterFunction<ServerResponse> roleRouter(RoleController roleController) {
         return route()
                 .POST("/roles", roleController::createRole)
                 .DELETE("/roles/{id}", roleController::deleteRole) 

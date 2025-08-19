@@ -28,7 +28,7 @@ public class Routes {
     @Bean
     public RouterFunction<ServerResponse> routerFunction(RoleController roleController) {
         return route()
-                .path("/api", builder -> builder.add(RoleRoutes.roleRoutes(roleController)))
+                .path("/api", builder -> builder.add(RoleRoutes.roleRouter(roleController)))
                 .build();
     }
     @Bean
