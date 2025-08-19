@@ -1,4 +1,4 @@
-import AuthLayout from "../../components/AuthLayout";
+import AuthLayout from "./AuthLayout";
 import SocialLogin from "../../components/SocialLogin";
 
 export default function ResetPasswordPage() {

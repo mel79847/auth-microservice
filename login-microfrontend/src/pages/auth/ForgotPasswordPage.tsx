@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import AuthLayout from "../../components/AuthLayout";
+import AuthLayout from "./AuthLayout";
 import SocialLogin from "../../components/SocialLogin";
+
 
 export default function ForgotPasswordPage() {
   const navigate = useNavigate();

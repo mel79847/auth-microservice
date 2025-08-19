@@ -1,6 +1,4 @@
-import upbLogo from "/upblogo.jpeg";
-import figuraIzq from "../assets/fotito.png";
-import figuraDer from "../assets/fotito.png";
+import React from "react";
 
 interface AuthLayoutProps {
   position?: "left" | "right" | "center";
@@ -8,12 +6,16 @@ interface AuthLayoutProps {
 }
 
 export default function AuthLayout({ position = "center", children }: AuthLayoutProps) {
+  const upbLogo = "/upblogo.jpeg";
+  const figura = "/fotito.png";
+  const layoutClass = position === "center" ? "login-layout center" : "login-layout two-columns";
+
   return (
-    <div className="login-background">
-      <div className="login-layout two-columns">
+    <div className="background-full">
+      <div className={layoutClass}>
         {position === "left" && (
-          <div className="figure-col">
-            <img src={figuraIzq} alt="Figura izquierda" />
+          <div className="figure-col" aria-hidden>
+            <img src={figura} alt="Figura decorativa izquierda" />
           </div>
         )}
 
@@ -23,8 +25,8 @@ export default function AuthLayout({ position = "center", children }: AuthLayout
         </div>
 
         {position === "right" && (
-          <div className="figure-col">
-            <img src={figuraDer} alt="Figura derecha" />
+          <div className="figure-col" aria-hidden>
+            <img src={figura} alt="Figura decorativa derecha" />
           </div>
         )}
       </div>
