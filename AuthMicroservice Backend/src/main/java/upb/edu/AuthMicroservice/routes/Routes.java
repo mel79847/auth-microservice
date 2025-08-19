@@ -4,15 +4,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
+import org.springframework.web.servlet.function.RouterFunctions;
 
 import upb.edu.AuthMicroservice.controllers.RoleController;
 import upb.edu.AuthMicroservice.controllers.UserController;
-
-
-
-import static org.springframework.web.servlet.function.RouterFunctions.route;
-
 import upb.edu.AuthMicroservice.controllers.SessionController;
+
+import static org.springframework.web.servlet.function.RequestPredicates.*;
+import static org.springframework.web.servlet.function.RouterFunctions.route;
 
 @Configuration
 public class Routes {
@@ -24,25 +23,15 @@ public class Routes {
         this.userController = userController;
         this.sessionController = sessionController;
     }
-
     @Bean
     public RouterFunction<ServerResponse> routerFunction(RoleController roleController) {
-        return RouterFunctions.route()
-                .path("/api", builder -> builder.add(RoleRoutes.roleRoutes(roleController)))
-                .build();
-
-    @Bean
-    public RouterFunction<ServerResponse> userRoutes(UserController controller) {
         return route()
+            .nest(path("/api"), builder -> builder
                 .POST("/register-user", userController::registerUser)
-                .POST("/login",        userController::login)
-                .build();
-    }
-
-    @Bean
-    public RouterFunction<ServerResponse> sessionRoutes() {
-        return route()
+                .POST("/login", userController::login)
+                .PUT("/change-password", userController::changePassword)
                 .POST("/generate-session", sessionController::generateSession)
-                .build();
+                .add(RoleRoutes.roleRoutes(roleController)))
+            .build();
     }
 }
