@@ -2,6 +2,7 @@ package upb.edu.AuthMicroservice.controllers;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.function.ServerRequest;
@@ -29,6 +30,32 @@ public class PermissionController {
             return ServerResponse.badRequest().body(new Response("400", "Error: " + e.getMessage()));
         }
     }
+
+    public ServerResponse updatePermission(ServerRequest request) {
+    try {
+        String id = request.pathVariable("id");
+        Permission body = request.body(Permission.class);
+
+        
+        Permission updated = permissionInteractor.updatePermission(id, body);
+
+        if (updated == null) {
+            return ServerResponse.notFound().build(); 
+        }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("code", 200);
+        response.put("msg", "OK");
+        response.put("data", updated);
+
+        return ServerResponse.ok().body(response);
+    } catch (IllegalArgumentException e) {
+        
+        return ServerResponse.badRequest().body(new Response("400", e.getMessage()));
+    } catch (Exception e) {
+        return ServerResponse.status(500).body(new Response("500", "Error interno: " + e.getMessage()));
+    }
+}
 
      public ServerResponse deletePermission(ServerRequest request) {
         try {
