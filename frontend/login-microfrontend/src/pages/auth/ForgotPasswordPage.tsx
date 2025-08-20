@@ -12,7 +12,7 @@ export default function ForgotPasswordPage() {
 
       <form className="login-form">
         <input type="email" placeholder="Username o Email" required />
-        <button type="submit" className="login-btn">
+        <button type="submit" className="login-btn" onClick={() => navigate("/reset-password")}>
           Next
         </button>
         <div className="forgot-link">
