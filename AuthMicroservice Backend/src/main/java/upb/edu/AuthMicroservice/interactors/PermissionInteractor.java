@@ -1,5 +1,4 @@
 
-
 package upb.edu.AuthMicroservice.interactors;
 
 import java.util.List;
