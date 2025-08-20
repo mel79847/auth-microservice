@@ -1,5 +1,8 @@
 package upb.edu.AuthMicroservice.controllers;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import java.util.Map;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,9 @@ public class PermissionController {
         } catch (Exception e) {
             return ServerResponse.badRequest().body(new Response("400", "Error: " + e.getMessage()));
         }
+    }   
+
+    public ServerResponse getAllPermissions(ServerRequest request) {
     }
 
      public ServerResponse deletePermission(ServerRequest request) {
@@ -56,5 +62,6 @@ public class PermissionController {
             return ServerResponse.badRequest().body(new Response("500", "Error interno: " + e.getMessage()));
         }
     }
+}
 
 }
