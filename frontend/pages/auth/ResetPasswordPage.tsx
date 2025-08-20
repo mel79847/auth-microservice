@@ -1,7 +1,7 @@
-import SocialLogin from "../../components/SocialLogin";
-import upbLogo from "/upblogo.jpeg";
-import figuraIzq from "../../assets/fotito.png";
-import figuraDer from "../../assets/fotito.png";
+import SocialLogin from "../../src/components/SocialLogin";
+import upbLogo from "../../public/upblogo.jpeg";
+import figuraIzq from "../../src/assets/fotito.png";
+import figuraDer from "../../src/assets/fotito.png";
 
 export default function ResetPasswordPage({ position = "center" }) {
   return (

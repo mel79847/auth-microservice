@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import SocialLogin from "../../components/SocialLogin";
+import SocialLogin from "../../src/components/SocialLogin";
 import upbLogo from "/upblogo.jpeg";
 import figuraIzq from "../../assets/fotito.png";
 import figuraDer from "../../assets/fotito.png";
