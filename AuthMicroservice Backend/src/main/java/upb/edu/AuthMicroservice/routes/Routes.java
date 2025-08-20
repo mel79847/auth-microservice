@@ -13,6 +13,15 @@ import upb.edu.AuthMicroservice.controllers.SessionController;
 import static org.springframework.web.servlet.function.RequestPredicates.*;
 import static org.springframework.web.servlet.function.RouterFunctions.route;
 
+import upb.edu.AuthMicroservice.controllers.RoleController;
+import upb.edu.AuthMicroservice.controllers.UserController;
+
+
+
+import static org.springframework.web.servlet.function.RouterFunctions.route;
+
+import upb.edu.AuthMicroservice.controllers.SessionController;
+
 @Configuration
 public class Routes {
 
@@ -33,5 +42,25 @@ public class Routes {
                 .POST("/generate-session", sessionController::generateSession)
                 .add(RoleRoutes.roleRoutes(roleController)))
             .build();
+
+    @Bean
+    public RouterFunction<ServerResponse> routerFunction(RoleController roleController) {
+        return route()
+                .path("/api", builder -> builder.add(RoleRoutes.roleRouter(roleController)))
+                .build();
+    }
+    @Bean
+    public RouterFunction<ServerResponse> userRoutes(UserController controller) {
+        return route()
+                .POST("/register-user", userController::registerUser)
+                .POST("/login",        userController::login)
+                .build();
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> sessionRoutes() {
+        return route()
+                .POST("/generate-session", sessionController::generateSession)
+                .build();
     }
 }
