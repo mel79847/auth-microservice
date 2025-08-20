@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import AuthLayout from "./AuthLayout";
 import SocialLogin from "../../components/SocialLogin";
 
-
 export default function ForgotPasswordPage() {
   const navigate = useNavigate();
 
@@ -16,9 +15,7 @@ export default function ForgotPasswordPage() {
           Next
         </button>
         <div className="forgot-link">
-          <span onClick={() => navigate("/login")}>
-            Back to Login?
-          </span>
+          <span onClick={() => navigate("/login")}>Back to Login?</span>
         </div>
       </form>
 
