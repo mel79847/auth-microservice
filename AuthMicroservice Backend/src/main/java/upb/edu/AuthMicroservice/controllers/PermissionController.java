@@ -32,30 +32,25 @@ public class PermissionController {
     }
 
     public ServerResponse updatePermission(ServerRequest request) {
-    try {
-        String id = request.pathVariable("id");
-        Permission body = request.body(Permission.class);
+        try {
+            String id = request.pathVariable("id");
+            Permission body = request.body(Permission.class);
 
-        
-        Permission updated = permissionInteractor.updatePermission(id, body);
+            Permission updated = permissionInteractor.updatePermission(id, body);
 
-        if (updated == null) {
-            return ServerResponse.notFound().build(); 
+            if (updated == null) {
+                return ServerResponse.notFound().build(); 
+            }
+
+            return ServerResponse.ok().body(
+                new Response("200", "Permiso actualizado correctamente")
+            );
+        } catch (IllegalArgumentException e) {
+            return ServerResponse.badRequest().body(new Response("400", e.getMessage()));
+        } catch (Exception e) {
+            return ServerResponse.status(500).body(new Response("500", "Error interno: " + e.getMessage()));
         }
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("code", 200);
-        response.put("msg", "OK");
-        response.put("data", updated);
-
-        return ServerResponse.ok().body(response);
-    } catch (IllegalArgumentException e) {
-        
-        return ServerResponse.badRequest().body(new Response("400", e.getMessage()));
-    } catch (Exception e) {
-        return ServerResponse.status(500).body(new Response("500", "Error interno: " + e.getMessage()));
     }
-}
 
      public ServerResponse deletePermission(ServerRequest request) {
         try {
