@@ -32,10 +32,9 @@ public class Routes {
                 .build();
     }
     @Bean
-    public RouterFunction<ServerResponse> userRoutes(UserController controller) {
+    public RouterFunction<ServerResponse> userRoutesFunction(UserController controller) {
         return route()
-                .POST("/register-user", userController::registerUser)
-                .POST("/login",        userController::login)
+                .path("/auth", builder -> builder.add(UserRoutes.userRouter(controller)))
                 .build();
     }
 
