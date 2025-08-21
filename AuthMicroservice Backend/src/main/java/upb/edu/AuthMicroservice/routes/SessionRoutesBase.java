@@ -15,12 +15,12 @@ import static org.springframework.web.servlet.function.RouterFunctions.route;
 import upb.edu.AuthMicroservice.controllers.SessionController;
 
 @Configuration
-public class Routes {
+public class SessionRoutesBase {
 
     private final UserController userController;
     private final SessionController sessionController;
 
-    public Routes(UserController userController, SessionController sessionController) {
+    public SessionRoutesBase(UserController userController, SessionController sessionController) {
         this.userController = userController;
         this.sessionController = sessionController;
     }
@@ -43,6 +43,7 @@ public class Routes {
     public RouterFunction<ServerResponse> sessionRoutes() {
         return route()
                 .POST("/generate-session", sessionController::generateSession)
+                .GET("/session/{Id}", sessionController::getSession)
                 .build();
     }
 }
