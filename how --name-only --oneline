@@ -1,5 +1,0 @@
-[33m4b9160b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mTarea761_Implementar_endpoint_DELETE-Roles[m[33m, [m[1;31morigin/Tarea761_Implementar_endpoint_DELETE-Roles[m[33m)[m Tarea #761: Implementar endpoint DELETE /api/roles
-AuthMicroservice Backend/src/main/java/upb/edu/AuthMicroservice/controllers/RoleController.java
-AuthMicroservice Backend/src/main/java/upb/edu/AuthMicroservice/interactors/RoleInteractor.java
-AuthMicroservice Backend/src/main/java/upb/edu/AuthMicroservice/routes/RoleRoutes.java
-AuthMicroservice Backend/src/main/java/upb/edu/AuthMicroservice/services/RoleService.java
