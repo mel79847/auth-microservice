@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.servlet.function.ServerResponse;
 import upb.edu.AuthMicroservice.dtos.GenerateSessionRequest;
+import upb.edu.AuthMicroservice.models.Response;
 import upb.edu.AuthMicroservice.services.SessionService;
 
 import java.util.Map;
@@ -25,7 +26,7 @@ public class SessionController {
         } catch (Exception e) {
             return ServerResponse
                     .badRequest()
-                    .body(Map.of("code", 400, "msg", "JSON inválido: " + e.getMessage()));
+                    .body(new Response("400", "JSON inválido: " + e.getMessage()));
         }
 
         try {
@@ -40,15 +41,12 @@ public class SessionController {
             return ServerResponse.status(201).body(body);
 
         } catch (IllegalArgumentException e) {
-            return ServerResponse.badRequest().body(Map.of(
-                    "code", 400,
-                    "msg", "El user_id proporcionado no es válido o no existe"
-            ));
+            return ServerResponse.badRequest().body(new Response("400", "El user_id proporcionado no es válido o no existe"));
         } catch (Exception e) {
-            return ServerResponse.status(500).body(Map.of("code", 500, "msg", "Error interno"));
+            return ServerResponse.status(500).body(new Response("500", "Error interno"));
         }
     }
-     
+    
 
     public ServerResponse getSession(ServerRequest request) {
         String idStr = request.pathVariable("id");
@@ -56,7 +54,7 @@ public class SessionController {
         try {
             sessionId = UUID.fromString(idStr);
         } catch (IllegalArgumentException e) {
-            return ServerResponse.badRequest().body(Map.of("code", 400, "msg", "session_id inválido"));
+            return ServerResponse.badRequest().body(new Response("400", "session_id inválido"));
         }
 
         return sessionService.getSessionById(sessionId)
@@ -68,6 +66,6 @@ public class SessionController {
                         "expires_at", s.getExpiresAt().toString(),
                         "is_valid", s.isValid()
                 )))
-                .orElseGet(() -> ServerResponse.status(404).body(Map.of("code", 404, "msg", "Sesión no encontrada")));
+                .orElseGet(() -> ServerResponse.status(404).body(new Response("404", "Sesión no encontrada")));
     }
 }
