@@ -1,11 +1,14 @@
 package upb.edu.AuthMicroservice.services;
 
+import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import upb.edu.AuthMicroservice.interactors.SessionInteractor;
-
-import java.util.Map;
+import upb.edu.AuthMicroservice.models.Session;
+import upb.edu.AuthMicroservice.repositories.SessionRepository;
+import upb.edu.AuthMicroservice.repositories.UserRepository;
 
 @Service
 public class SessionService {
@@ -13,21 +16,40 @@ public class SessionService {
     @Autowired
     private SessionInteractor interactor;
 
-    public ResponseEntity<Object> generateSession(int userId) {
-        try {
-            var result = interactor.execute(userId);
-            return ResponseEntity.status(201).body(Map.of(
-                "code", 201,
-                "msg", "Sesión creada exitosamente",
-                "session_id", result.sessionId.toString(),
-                "access_token", result.accessToken,
-                "refresh_token", result.refreshToken.toString()
-            ));
-        } catch (Exception ex) {
-            return ResponseEntity.status(500).body(Map.of(
-                "code", 500,
-                "msg", "Error al generar el refresh token"
-            ));
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private SessionRepository sessionRepository;
+
+    public static class SessionCreationResult {
+        private final UUID sessionId;
+        private final UUID accessToken;
+
+        public SessionCreationResult(UUID sessionId, UUID accessToken) {
+            this.sessionId = sessionId;
+            this.accessToken = accessToken;
         }
+        public UUID getSessionId() { return sessionId; }
+        public UUID getAccessToken() { return accessToken; }
+    }
+    public SessionCreationResult generateSession(int userId) {
+        if (userId <= 0) {
+            throw new IllegalArgumentException("El user_id proporcionado no es válido o no existe");
+        }
+        if (!userRepository.existsById(userId)) {
+            throw new IllegalArgumentException("El user_id proporcionado no es válido o no existe");
+        }
+        UUID sessionId = interactor.execute(userId);
+
+        Optional<Session> maybe = sessionRepository.findById(sessionId);
+        if (maybe.isEmpty()) {
+            throw new RuntimeException("La sesión fue creada pero no se pudo recuperar");
+        }
+        Session created = maybe.get();
+        return new SessionCreationResult(created.getId(), created.getAccessToken());
+    }
+    public Optional<Session> getSessionById(UUID sessionId) {
+        return interactor.findById(sessionId);
     }
 }

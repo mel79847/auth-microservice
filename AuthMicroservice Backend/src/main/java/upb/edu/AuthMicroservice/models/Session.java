@@ -1,9 +1,6 @@
 package upb.edu.AuthMicroservice.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -13,6 +10,9 @@ public class Session {
 
     @Id
     private UUID id;
+
+    @Column(name = "access_token", nullable = false, unique = true)
+    private UUID accessToken;
 
     @Column(name = "user_id")
     private int userId;
@@ -26,14 +26,13 @@ public class Session {
     @Column(name = "is_valid")
     private boolean isValid;
 
-    @Column(name = "refresh_token", unique = true)
-    private UUID refreshToken;
-
-    @Column(name = "refresh_token_expires_at")
-    private LocalDateTime refreshTokenExpiresAt;
+    public Session() {}
 
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
+
+    public UUID getAccessToken() { return accessToken; }
+    public void setAccessToken(UUID accessToken) { this.accessToken = accessToken; }
 
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
@@ -46,10 +45,4 @@ public class Session {
 
     public boolean isValid() { return isValid; }
     public void setIsValid(boolean isValid) { this.isValid = isValid; }
-
-    public UUID getRefreshToken() { return refreshToken; }
-    public void setRefreshToken(UUID refreshToken) { this.refreshToken = refreshToken; }
-
-    public LocalDateTime getRefreshTokenExpiresAt() { return refreshTokenExpiresAt; }
-    public void setRefreshTokenExpiresAt(LocalDateTime refreshTokenExpiresAt) { this.refreshTokenExpiresAt = refreshTokenExpiresAt; }
 }
