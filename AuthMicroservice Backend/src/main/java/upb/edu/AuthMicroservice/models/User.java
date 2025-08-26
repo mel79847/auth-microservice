@@ -1,39 +1,29 @@
 package upb.edu.AuthMicroservice.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users")
 public class User {
 
-@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;    
+    private int id;
+
     private String email;
 
     private String password;
 
-    @JsonProperty("first_name")
-    private String firstName;
+    @JsonProperty("is_validated")
+    @Column(name = "is_validated")
+    private boolean isValidated = false;
 
-    @JsonProperty("middle_name")
-    private String middleName;
-
-    @JsonProperty("last_names")
-    private String lastName;
-    private String code;
-
-    @JsonProperty("enrollment_date")
-    private Date enrollmentDate;
-
-    public User() {}
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_profile_id", referencedColumnName = "id")
+    @JsonUnwrapped
+    private UserProfile userProfile;
 
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
@@ -41,14 +31,8 @@ public class User {
     public void setEmail(String email) { this.email = email; }
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public String getMiddleName() { return middleName; }
-    public void setMiddleName(String middleName) { this.middleName = middleName; }
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public String getCode() { return code; }
-    public void setCode(String code) { this.code = code; }
-    public Date getEnrollmentDate() { return enrollmentDate; }
-    public void setEnrollmentDate(Date enrollmentDate) { this.enrollmentDate = enrollmentDate; }
+    public boolean isValidated() { return isValidated; }
+    public void setValidated(boolean validated) { isValidated = validated; }
+    public UserProfile getUserProfile() { return userProfile; }
+    public void setUserProfile(UserProfile userProfile) { this.userProfile = userProfile; }
 }

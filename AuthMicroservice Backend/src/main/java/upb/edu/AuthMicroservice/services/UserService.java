@@ -3,10 +3,7 @@ package upb.edu.AuthMicroservice.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import upb.edu.AuthMicroservice.interactors.SessionInteractor;
-
-
 import upb.edu.AuthMicroservice.interactors.UserInteractor;
 import upb.edu.AuthMicroservice.models.User;
 
@@ -14,8 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-
-
 
 @Service
 public class UserService {
@@ -29,6 +24,9 @@ public class UserService {
     }
 
     public User createUser(User user) {
+        if (user.getUserProfile() != null) {
+            user.getUserProfile().setUser(user);
+        }
         return userInteractor.createUser(user);
     }
 
