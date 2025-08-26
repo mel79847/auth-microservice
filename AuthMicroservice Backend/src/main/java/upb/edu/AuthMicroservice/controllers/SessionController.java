@@ -6,6 +6,9 @@ import org.springframework.web.servlet.function.ServerResponse;
 import upb.edu.AuthMicroservice.dtos.GenerateSessionRequest;
 import upb.edu.AuthMicroservice.services.SessionService;
 import upb.edu.AuthMicroservice.dtos.RefreshTokenRequest;
+import upb.edu.AuthMicroservice.exceptions.InvalidRefreshTokenException;
+import upb.edu.AuthMicroservice.exceptions.InvalidSessionException;
+import upb.edu.AuthMicroservice.models.Response;
 
 import java.util.Map;
 
@@ -50,32 +53,36 @@ public class SessionController {
     }
 
     public ServerResponse refreshToken(ServerRequest request) {
-    Map<String, Object> json;
-    try {
-        json = request.body(Map.class);
-    } catch (Exception e) {
-        return ServerResponse.badRequest().body(Map.of("code", 400, "msg", "JSON inválido: " + e.getMessage()));
-    }
-    RefreshTokenRequest dto = new RefreshTokenRequest();
-    try {
-        dto.setRefresh_token((String) json.get("refresh_token"));
-    } catch (Exception e) {
-        return ServerResponse.badRequest().body(Map.of("code", 400, "msg", "JSON inválido: " + e.getMessage()));
-    }
+        Map<String, Object> json;
+        try {
+            json = request.body(Map.class);
+        } catch (Exception e) {
+            return ServerResponse.badRequest().body(new Response("400", "JSON inválido: " + e.getMessage()));
+        }
 
-    String result = sessionService.refreshAccessToken(dto.getRefresh_token());
-
-    if ("403".equals(result)) {
-        return ServerResponse.status(403).body(Map.of("code", 403, "msg", "La sesión asociada no es válida"));
+        RefreshTokenRequest dto = new RefreshTokenRequest();
+        try {
+            Object raw = json.get("refresh_token");
+            if (raw == null) {
+                throw new IllegalArgumentException("Campo 'refresh_token' requerido");
+            }
+            dto.setRefresh_token(raw.toString());
+        } catch (Exception e) {
+            return ServerResponse.badRequest().body(new Response("400", "JSON inválido: " + e.getMessage()));
+        }
+        
+        try {
+            String newAccess = sessionService.refreshAccessToken(dto.getRefresh_token());
+            return ServerResponse.ok().body(Map.of(
+                "code", 200,
+                "msg", "Token renovado exitosamente",
+                "access_token", newAccess));
+        } catch (InvalidSessionException ex) {
+            return ServerResponse.status(403).body(new Response("403", "La sesión asociada no es válida"));
+        } catch (InvalidRefreshTokenException ex) {
+            return ServerResponse.status(401).body(new Response("401", "Refresh token inválido o expirado"));
+        } catch (IllegalArgumentException ex) {
+            return ServerResponse.badRequest().body(new Response("400", "JSON inválido: " + ex.getMessage()));
+        }
     }
-    if (result == null || "401".equals(result)) {
-        return ServerResponse.status(401).body(Map.of("code", 401, "msg", "Refresh token inválido o expirado"));
-    }
-
-    return ServerResponse.ok().body(Map.of(
-            "code", 200,
-            "msg", "Token renovado exitosamente",
-            "access_token", result
-    ));
-}
 }

@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import upb.edu.AuthMicroservice.interactors.RefreshTokenInteractor;
 import upb.edu.AuthMicroservice.interactors.SessionInteractor;
+import upb.edu.AuthMicroservice.exceptions.InvalidRefreshTokenException;
+import upb.edu.AuthMicroservice.exceptions.InvalidSessionException;
 
 import java.util.UUID;
 
@@ -25,19 +27,19 @@ public class SessionService {
         try {
             rt = UUID.fromString(refreshToken);
         } catch (Exception e) {
-            return null;
+            throw new IllegalArgumentException("refresh_token no es un UUID válido");
         }
         try {
             UUID newAccess = refreshTokenInteractor.execute(rt, 15);
             if (newAccess == null) {
-                return "401";
+                throw new InvalidRefreshTokenException("Refresh token inválido o expirado");
             }
             return newAccess.toString();
         } catch (IllegalStateException ex) {
             if ("SESSION_INVALID".equals(ex.getMessage())) {
-                return "403";
+                throw new InvalidSessionException("La sesión asociada no es válida");
             }
-            return null;
+            throw ex;
         }
     }
 }
