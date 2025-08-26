@@ -14,7 +14,7 @@ public class Session {
     @Column(name = "user_id")
     private int userId;
 
-    @Column(name = "access_token", columnDefinition = "uuid")
+    @Column(name = "access_token", nullable = false, unique = true, columnDefinition = "uuid")
     private UUID accessToken;
 
     @Column(name = "refresh_token", columnDefinition = "uuid", unique = true)
@@ -32,48 +32,57 @@ public class Session {
     @Column(name = "is_valid")
     private boolean isValid;
 
-    public UUID getId() {
-        return id;
+    public Session() {}
+
+    public UUID getId() { 
+        return id; 
     }
-    public void setId(UUID id) {
-        this.id = id;
+    public void setId(UUID id) { 
+        this.id = id; 
     }
-    public int getUserId() {
-        return userId;
+
+    public int getUserId() { 
+        return userId; 
     }
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(int userId) { 
+        this.userId = userId; 
     }
-    public UUID getAccessToken() {
-        return accessToken;
+
+    public UUID getAccessToken() { 
+        return accessToken; 
     }
-    public void setAccessToken(UUID accessToken) {
-        this.accessToken = accessToken;
+    public void setAccessToken(UUID accessToken) { 
+        this.accessToken = accessToken; 
     }
+
     public UUID getRefreshToken() {
         return refreshToken;
     }
     public void setRefreshToken(UUID refreshToken) {
         this.refreshToken = refreshToken;
-    }    
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
+
     public LocalDateTime getExpiresAt() {
         return expiresAt;
     }
     public void setExpiresAt(LocalDateTime expiresAt) {
         this.expiresAt = expiresAt;
     }
+
     public LocalDateTime getRefreshTokenExpiresAt() { 
         return refreshTokenExpiresAt; 
     }
     public void setRefreshTokenExpiresAt(LocalDateTime refreshTokenExpiresAt) { 
         this.refreshTokenExpiresAt = refreshTokenExpiresAt; 
     }
+
     public boolean isValid() {
         return isValid;
     }
@@ -81,4 +90,3 @@ public class Session {
         this.isValid = isValid;
     }
 }
-

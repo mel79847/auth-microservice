@@ -6,11 +6,11 @@ import org.springframework.web.servlet.function.RouterFunction;
 import org.springframework.web.servlet.function.ServerResponse;
 
 import upb.edu.AuthMicroservice.controllers.RoleController;
+import upb.edu.AuthMicroservice.controllers.SessionController;
 import upb.edu.AuthMicroservice.controllers.UserController;
 
 import static org.springframework.web.servlet.function.RouterFunctions.route;
 
-import upb.edu.AuthMicroservice.controllers.SessionController;
 
 @Configuration
 public class Routes {
@@ -35,9 +35,8 @@ public class Routes {
                 .path("/auth", builder -> builder.add(UserRoutes.userRouter(controller)))
                 .build();
     }
-
-    @Bean
-    public RouterFunction<ServerResponse> sessionRoutes() {
+    @Bean 
+    public RouterFunction<ServerResponse> sessionRoutes(SessionController controller){
         return route()
                 .POST("/generate-session", sessionController::generateSession)
                 .POST("/refresh-token", sessionController::refreshToken)
