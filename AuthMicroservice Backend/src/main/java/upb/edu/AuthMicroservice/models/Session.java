@@ -14,6 +14,12 @@ public class Session {
     @Column(name = "access_token", nullable = false, unique = true)
     private UUID accessToken;
 
+    @Column(name = "refresh_token", unique = true)
+    private UUID refreshToken;
+
+    @Column(name = "refresh_token_expires_at")
+    private LocalDateTime refreshTokenExpiresAt;
+
     @Column(name = "user_id")
     private int userId;
 
@@ -33,6 +39,14 @@ public class Session {
 
     public UUID getAccessToken() { return accessToken; }
     public void setAccessToken(UUID accessToken) { this.accessToken = accessToken; }
+
+    public UUID getRefreshToken() { return refreshToken; }
+    public void setRefreshToken(UUID refreshToken) { this.refreshToken = refreshToken; }
+
+    public LocalDateTime getRefreshTokenExpiresAt() { return refreshTokenExpiresAt; }
+    public void setRefreshTokenExpiresAt(LocalDateTime refreshTokenExpiresAt) {
+        this.refreshTokenExpiresAt = refreshTokenExpiresAt;
+    }
 
     public int getUserId() { return userId; }
     public void setUserId(int userId) { this.userId = userId; }
