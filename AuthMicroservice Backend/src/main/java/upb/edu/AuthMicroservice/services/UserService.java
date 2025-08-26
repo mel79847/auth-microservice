@@ -4,28 +4,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import upb.edu.AuthMicroservice.interactors.SessionInteractor;
-
-
 import upb.edu.AuthMicroservice.interactors.UserInteractor;
 import upb.edu.AuthMicroservice.models.User;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
-
-
 
 @Service
 public class UserService {
     private final UserInteractor userInteractor;
-    private final SessionInteractor sessionInteractor;
+    private final SessionService sessionService;
 
     @Autowired
-    public UserService(UserInteractor userInteractor, SessionInteractor sessionInteractor) {
+    public UserService(UserInteractor userInteractor, SessionService sessionService) {
         this.userInteractor = userInteractor;
-        this.sessionInteractor = sessionInteractor;
+        this.sessionService = sessionService;
     }
 
     public User createUser(User user) {
@@ -42,11 +35,27 @@ public class UserService {
         }
 
         int userId = userOpt.get().getId();
-        UUID sessionId = sessionInteractor.execute(userId);
+        try {
+            SessionService.SessionCreationResult sessionResult = sessionService.generateSession(userId);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("session", sessionId.toString());
-        return ResponseEntity.ok(Map.of("code", 200, "msg", "Ok", "data", data));
+            return ResponseEntity.status(201).body(Map.of(
+                "code", 201,
+                "msg", "Sesión creada exitosamente",
+                "session_id", sessionResult.getSessionId().toString(),
+                "access_token", sessionResult.getAccessToken().toString(),
+                "refresh_token", sessionResult.getRefreshToken().toString()
+            ));
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.status(400).body(Map.of(
+                "code", 400,
+                "msg", ex.getMessage()
+            ));
+        } catch (Exception ex) {
+            return ResponseEntity.status(500).body(Map.of(
+                "code", 500,
+                "msg", "Error al generar el refresh token"
+            ));
+        }
     }
 
     public ResponseEntity<Object> changePassword(String email, String oldPassword, String newPassword) {
