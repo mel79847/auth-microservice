@@ -15,7 +15,7 @@ import upb.edu.AuthMicroservice.exceptions.InvalidSessionException;
 import upb.edu.AuthMicroservice.models.Session;
 import upb.edu.AuthMicroservice.repositories.SessionRepository;
 import upb.edu.AuthMicroservice.repositories.UserRepository;
-import java.util.UUID;
+
 
 @Service
 public class SessionService {
@@ -27,9 +27,7 @@ public class SessionService {
 
     private RefreshTokenInteractor refreshTokenInteractor;
 
-    public String generateSession(int userId) {
-        return interactor.execute(userId).toString();
-
+    
     private UserRepository userRepository;
 
     @Autowired
