@@ -3,12 +3,12 @@ package upb.edu.AuthMicroservice.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import upb.edu.AuthMicroservice.interactors.UserInteractor;
 import upb.edu.AuthMicroservice.models.User;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -22,6 +22,9 @@ public class UserService {
     }
 
     public User createUser(User user) {
+        if (user.getUserProfile() != null) {
+            user.getUserProfile().setUser(user);
+        }
         return userInteractor.createUser(user);
     }
 
@@ -39,21 +42,21 @@ public class UserService {
             SessionService.SessionCreationResult sessionResult = sessionService.generateSession(userId);
 
             return ResponseEntity.status(201).body(Map.of(
-                "code", 201,
-                "msg", "Sesión creada exitosamente",
-                "session_id", sessionResult.getSessionId().toString(),
-                "access_token", sessionResult.getAccessToken().toString(),
-                "refresh_token", sessionResult.getRefreshToken().toString()
+                    "code", 201,
+                    "msg", "Sesión creada exitosamente",
+                    "session_id", sessionResult.getSessionId().toString(),
+                    "access_token", sessionResult.getAccessToken().toString(),
+                    "refresh_token", sessionResult.getRefreshToken().toString()
             ));
         } catch (IllegalArgumentException ex) {
             return ResponseEntity.status(400).body(Map.of(
-                "code", 400,
-                "msg", ex.getMessage()
+                    "code", 400,
+                    "msg", ex.getMessage()
             ));
         } catch (Exception ex) {
             return ResponseEntity.status(500).body(Map.of(
-                "code", 500,
-                "msg", "Error al generar el refresh token"
+                    "code", 500,
+                    "msg", "Error al generar el refresh token"
             ));
         }
     }
