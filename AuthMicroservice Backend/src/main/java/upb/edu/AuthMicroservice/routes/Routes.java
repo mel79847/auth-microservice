@@ -9,8 +9,6 @@ import upb.edu.AuthMicroservice.controllers.RoleController;
 import upb.edu.AuthMicroservice.controllers.SessionController;
 import upb.edu.AuthMicroservice.controllers.UserController;
 
-
-
 import static org.springframework.web.servlet.function.RouterFunctions.route;
 
 
@@ -40,7 +38,8 @@ public class Routes {
     @Bean 
     public RouterFunction<ServerResponse> sessionRoutes(SessionController controller){
         return route()
-        .POST("/generate-session", sessionController::generateSession)
-        .build();
+                .POST("/generate-session", sessionController::generateSession)
+                .POST("/refresh-token", sessionController::refreshToken)
+                .build();
     }
 }
