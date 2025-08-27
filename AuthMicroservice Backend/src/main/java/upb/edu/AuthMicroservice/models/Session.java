@@ -9,6 +9,7 @@ import java.util.UUID;
 public class Session {
 
     @Id
+    @Column(name = "id", columnDefinition = "uuid")
     private UUID id;
 
     @Column(name = "user_id")
@@ -17,7 +18,7 @@ public class Session {
     @Column(name = "access_token", nullable = false, unique = true, columnDefinition = "uuid")
     private UUID accessToken;
 
-    @Column(name = "refresh_token", columnDefinition = "uuid", unique = true)
+    @Column(name = "refresh_token", unique = true, columnDefinition = "uuid")
     private UUID refreshToken;
 
     @Column(name = "created_at")
@@ -34,59 +35,27 @@ public class Session {
 
     public Session() {}
 
-    public UUID getId() { 
-        return id; 
-    }
-    public void setId(UUID id) { 
-        this.id = id; 
-    }
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
 
-    public int getUserId() { 
-        return userId; 
-    }
-    public void setUserId(int userId) { 
-        this.userId = userId; 
-    }
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
 
-    public UUID getAccessToken() { 
-        return accessToken; 
-    }
-    public void setAccessToken(UUID accessToken) { 
-        this.accessToken = accessToken; 
-    }
+    public UUID getAccessToken() { return accessToken; }
+    public void setAccessToken(UUID accessToken) { this.accessToken = accessToken; }
 
-    public UUID getRefreshToken() {
-        return refreshToken;
-    }
-    public void setRefreshToken(UUID refreshToken) {
-        this.refreshToken = refreshToken;
-    }
+    public UUID getRefreshToken() { return refreshToken; }
+    public void setRefreshToken(UUID refreshToken) { this.refreshToken = refreshToken; }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public LocalDateTime getExpiresAt() {
-        return expiresAt;
-    }
-    public void setExpiresAt(LocalDateTime expiresAt) {
-        this.expiresAt = expiresAt;
-    }
+    public LocalDateTime getExpiresAt() { return expiresAt; }
+    public void setExpiresAt(LocalDateTime expiresAt) { this.expiresAt = expiresAt; }
 
-    public LocalDateTime getRefreshTokenExpiresAt() { 
-        return refreshTokenExpiresAt; 
-    }
-    public void setRefreshTokenExpiresAt(LocalDateTime refreshTokenExpiresAt) { 
-        this.refreshTokenExpiresAt = refreshTokenExpiresAt; 
-    }
+    public LocalDateTime getRefreshTokenExpiresAt() { return refreshTokenExpiresAt; }
+    public void setRefreshTokenExpiresAt(LocalDateTime refreshTokenExpiresAt) { this.refreshTokenExpiresAt = refreshTokenExpiresAt; }
 
-    public boolean isValid() {
-        return isValid;
-    }
-    public void setIsValid(boolean isValid) {
-        this.isValid = isValid;
-    }
+    public boolean isValid() { return isValid; }
+    public void setIsValid(boolean isValid) { this.isValid = isValid; }
 }
