@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
@@ -7,7 +7,6 @@ import ResetPasswordPage from "./pages/auth/ResetPasswordPage";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  const [mode, setMode] = useState("center");
 
   return (
     <div className="background-full">
