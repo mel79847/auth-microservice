@@ -27,7 +27,7 @@ public class SessionService {
 
     private RefreshTokenInteractor refreshTokenInteractor;
 
-    
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
