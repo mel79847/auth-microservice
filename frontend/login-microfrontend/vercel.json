@@ -1,7 +1,6 @@
-{
+﻿{
   "version": 2,
   "github": { "enabled": false },
-  "builds": [{ "src": "dist", "use": "@vercel/static" }],
   "routes": [
     { "src": "/(.*)", "dest": "/index.html" }
   ]
