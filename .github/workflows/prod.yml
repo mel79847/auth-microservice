@@ -17,18 +17,9 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: frontend/login-microfrontend
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      # (Opcional) podemos omitir build local porque el CI ya valida
-      # - name: Install deps
-      #   run: npm ci
-      # - name: Build local
-      #   run: npm run build
 
       - name: Deploy to Vercel (Production, remote build)
         uses: amondnet/vercel-action@v41.1.4
