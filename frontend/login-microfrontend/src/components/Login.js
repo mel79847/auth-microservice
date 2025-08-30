@@ -45,3 +45,5 @@ var Login = function (_a) {
     return <div className="login-background">{renderContent()}</div>;
 };
 exports.default = Login;
+
+// preview-check 2025-08-29T20:33:09
