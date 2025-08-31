@@ -49,7 +49,6 @@ jobs:
         run: npm test --if-present
 
   e2e:
-    if: ${{ hashFiles('frontend/login-microfrontend/cypress.config.*') != '' }}
     name: Cypress E2E
     runs-on: ubuntu-latest
     needs: quality
