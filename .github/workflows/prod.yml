@@ -2,7 +2,7 @@
 
 on:
   push:
-    branches: [main, develop, dev]   
+    branches: [main, develop, dev]
     paths:
       - "frontend/login-microfrontend/**"
 
@@ -29,4 +29,4 @@ jobs:
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: "--prod"
-          working-directory: frontend/login-microfrontend
+          working-directory: .
